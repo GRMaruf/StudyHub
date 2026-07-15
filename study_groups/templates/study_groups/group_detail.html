@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-center m-5">{{group.name}}</h2>
+
+<p>{{group.description}}</p>
+<p>{{group.members}}</p>
+<p>Total members: {{group.members.count}}</p>
+<p>{{group.created_at}}</p>
+
+{% if request.user in group.members.all %}
+    <button class="btn btn-secondary" disabled>Joined</button>
+{% else %}
+    <a href="{% url 'join-group' group.id %}" class="btn btn-primary">Join Group</a>
+{% endif %}
+{% endblock content %}
+
+{{user.username}}
+{% comment %} 
+
+Use natural time (Created 2 months ego)
+
+{% endcomment %}
+    

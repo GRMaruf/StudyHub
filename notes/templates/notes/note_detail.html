@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Student Dashboard</h2>
+  <a href="{% url 'note-create' %}" class="btn btn-primary">Upload New Note</a>
+  <a href="{% url 'my-notes' %}" class="btn btn-primary">See Own Notes</a>
+
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ note.title }}</h5>
+          <p>{{ note.description }}</p>
+          <a href="{{ note.file.url }}" class="btn btn-sm btn-info" download>Download</a>
+
+          {% if note.author == user %}
+            <a href="{% url 'note-edit' note.pk %}" class="btn btn-sm btn-warning">Edit</a>
+            <a href="{% url 'note-delete' note.pk %}" class="btn btn-sm btn-danger">Delete</a>
+          {% endif %}
+          <div class="container">
+            {% comment %} <a href="{% url 'toggle-like' note.pk %}">Like-{{ note.likes.count }}</a> {% endcomment %}
+
+            <div id="like-section">
+              <button hx-post="{% url 'toggle-like' note.id %}"
+                hx-target="#like-section"
+                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                class="btn {% if user_liked %}btn-primary{% else %}btn-outline-primary{% endif %}">Like ({{ note.likes.count }})
+              </button>
+            </div>
+            Comment-{{ note.comments.count }}
+          </div>
+        </div>
+      </div>
+
+      <form action="{% url 'add-comment' note.id %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="content" placeholder="Your comment ..." />
+        <input type="submit" value="Submit" />
+      </form>
+
+      {% for comment in note.comments.all %}
+        <div class="container border m-2">
+          <div>{{ comment.author.profile.full_name|default:comment.author.username }}-{{ comment.created_at }}</div>
+          <hr />
+          <div>{{ comment.content }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
+
+
+
+
+
+
+
+{% comment %} 
+
+edit delete comments with htmx
+
+{% endcomment %}

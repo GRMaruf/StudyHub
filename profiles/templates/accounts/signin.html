@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% comment %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <div>
+    <form method="post" class="w-50 mx-auto py-5">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+{% endblock %}
+{% endcomment %}
+
+{% block content %}
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-5 col-md-7">
+        <div class="card shadow border-0">
+          <div class="card-body p-4">
+            <h2 class="text-center mb-4">Sign In</h2>
+
+            <form method="post" novalidate>
+              {% csrf_token %}
+
+              {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                  {% for error in form.non_field_errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+                {% elif messages %}
+                
+                {% for x in messages %}
+                    <div class="badge bg-success">{{x}}</div>
+                {% endfor %}
+                    
+              {% endif %}
+
+              {% for field in form %}
+                <div class="mb-3">
+                  <label class="form-label">{{ field.label }}</label>
+
+                  <div class="position-relative">
+                    {{ field }}
+
+                    {% if field.name == 'password' %}
+                      <button type="button" class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2 toggle-password">👁</button>
+                    {% endif %}
+                  </div>
+
+                  {% if field.errors %}
+                    <div class="alert alert-danger py-2 mt-2">
+                      {% for error in field.errors %}
+                        <div>{{ error }}</div>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="remember" />
+                  <label class="form-check-label" for="remember">Remember me</label>
+                </div>
+
+                <a href="#">Forgot password?</a>
+              </div>
+
+              <button class="btn btn-primary w-100">Sign In</button>
+            </form>
+
+            <hr />
+
+            <p class="text-center mb-0">
+              Don't have an account?
+              <a href="{% url 'signup' %}">Create one</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Apply Bootstrap styling
+      document.querySelectorAll('input').forEach(function (input) {
+        if (!input.classList.contains('form-check-input')) {
+          input.classList.add('form-control')
+        }
+      })
+    
+      // Highlight invalid inputs
+      document.querySelectorAll('.alert-danger').forEach(function (alert) {
+        const parent = alert.closest('.mb-3')
+    
+        if (parent) {
+          const input = parent.querySelector('input')
+    
+          if (input) {
+            input.classList.add('is-invalid')
+          }
+        }
+      })
+    
+      // Password visibility toggle
+      document.querySelectorAll('.toggle-password').forEach(function (button) {
+        button.addEventListener('click', function () {
+          const input = button.parentElement.querySelector('input')
+    
+          if (input.type === 'password') {
+            input.type = 'text'
+            button.textContent = '🙈'
+          } else {
+            input.type = 'password'
+            button.textContent = '👁'
+          }
+        })
+      })
+    })
+  </script>
+
+  <style>
+    .card {
+      border-radius: 16px;
+    }
+    
+    .form-control {
+      border-radius: 10px;
+    }
+    
+    .alert-danger {
+      border-radius: 10px;
+      font-size: 0.9rem;
+    }
+    
+    .is-invalid {
+      border-width: 2px;
+    }
+    
+    .toggle-password {
+      border-radius: 8px;
+      padding: 2px 10px;
+    }
+    
+    a {
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+{% endblock %}

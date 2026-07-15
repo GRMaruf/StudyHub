@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-center m-5">Profile</h2>
+
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% with request.user.profile as profile %}
+
+<div class="custom-file-upload">
+    <img id="avatarPreview" src="{{ profile.avatar.url }}" alt="Profile Avatar" width="300">
+    <button hidden>Submit</button>
+    <input type="file" name="avatar" id="fileInput" accept=".png,.jpg,.jpeg">
+</div>
+
+
+{% endwith %}
+
+
+{% comment %} <img src="{{profile.avatar.url}}" alt="Profile Avatar" width="300px">
+<input type="file" name="avatar" id="avatar" accept=".png, .jpg, .jpeg" >
+    {{profile.full_name}}
+    {{profile.bio}}
+    {{profile.university}}
+{% endwith %}
+<input type="submit" value="Update"> {% endcomment %}
+</form>
+    
+
+
+<script>
+const fileInput = document.getElementById('fileInput');
+const avatarPreview = document.getElementById('avatarPreview');
+
+avatarPreview.addEventListener('click', () => {
+    fileInput.click();
+});
+
+{% comment %} fileInput.addEventListener('change', function () {
+    const file = this.files[0];
+
+    if (file) {
+        avatarPreview.src = URL.createObjectURL(file);
+    }
+}); {% endcomment %}
+
+fileInput.addEventListener('change', function () {
+    const file = this.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            avatarPreview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+    }
+});
+</script>
+{% endblock content %}
+    

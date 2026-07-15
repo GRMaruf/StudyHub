@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>My Own Notes</h2>
+<a href="{% url 'note-create' %}" class="btn btn-primary">Upload New Note</a>
+
+<div class="row mt-4">
+    {% for note in notes %}
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ note.title }}
+                {% if note.is_approved %}
+                    <span class="badge bg-success text-light">Approved</span>
+                    {% else %}
+                    <span class="badge bg-danger text-light">Pending</span>
+                {% endif %}</h5>
+                <p>{{ note.description|truncatewords:20 }}</p>
+                
+                    
+                <a href="{{ note.file.url }}" class="btn btn-sm btn-info" download>Download</a>
+                <a href="{% url 'note-detail' note.pk %}" class="btn btn-sm btn-warning">Details</a>
+                {% if note.author == user %}
+                    <a href="{% url 'note-edit' note.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'note-delete' note.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

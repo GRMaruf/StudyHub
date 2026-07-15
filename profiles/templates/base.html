@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <meta name="htmx-config" content='{"defaultSwapStyle":"outerHTML"}'>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script>
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+    <script>
+    document.body.addEventListener('htmx:configRequest', (event) => {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    });
+  </script>
+
+    <title>Document</title>
+    <style>
+    :root {
+        --bg-color: #ffffff;
+        --text-color: #212529;
+    }
+    [data-theme="dark"] {
+        --bg-color: #121212; 
+        --text-color: #e0e0e0;
+    }
+    body { 
+      background-color: var(--bg-color); 
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content {
+       flex-grow: 1;
+    }
+
+      .navbar-brand, .nav-link{
+        font-weight: bold;
+      }
+.custom-file-upload {
+position: relative;
+display: inline-block;
+}
+.custom-file-upload button {
+padding: 10px 20px;
+border: 1px solid #ccc;
+border-radius: 5px;
+cursor: pointer;
+background-color: #4CAF50;
+color: white;
+font-family: Arial, sans-serif;
+}
+.custom-file-upload button:hover {
+background-color: #388e3c;
+}
+.custom-file-upload input[type="file"] {
+position: absolute;
+opacity: 0;
+width: 100%;
+height: 100%;
+cursor: pointer;
+}
+
+
+      {% comment %} input[type="file"]::file-selector-button {
+background-color: #4CAF50;
+color: white;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+input[type="file"]::file-selector-button:hover {
+background-color: #388e3c;
+} {% endcomment %}
+    </style>
+  </head>
+  <body>
+    {% include 'nav.html' %}
+    <div class="content">
+      {% block content %} {% endblock content %}
+    </div>
+    {% include 'footer.html' %}
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

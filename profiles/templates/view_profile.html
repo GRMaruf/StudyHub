@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-center m-5">Profile</h2>
+
+
+{% with request.user.profile as profile %}
+
+<img src="{{profile.avatar.url}}" alt="Profile Avatar" width="300px">
+    
+{{profile.full_name}}
+    {{profile.bio}}
+    {{request.user.email}}
+    {{profile.university}}
+{% endwith %}
+    <a href="{% url 'edit_profile' %}">Edit Profile</a>
+
+{% endblock content %}
+    

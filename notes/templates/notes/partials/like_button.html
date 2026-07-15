@@ -1,0 +1,8 @@
+<div id="like-section">
+    <button hx-post="{% url 'toggle-like' note.id %}" 
+    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+            hx-target="#like-section"
+            class="btn {% if user_liked %}btn-primary{% else %}btn-outline-primary{% endif %}">
+        Like ({{ note.likes.count }})
+    </button>
+</div>

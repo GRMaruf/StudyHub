@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>List of Study Groups</h2>
+<a href="#" class="btn btn-primary">Create New Group</a>
+<a href="#" class="btn btn-primary">See Own Groups</a>
+
+<div class="row mt-4">
+    {% for group in groups %}
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ group.name }}</h5>
+                <p>{{ group.description|truncatewords:20 }}</p>
+                {% if request.user in group.members.all %}
+                
+    <button class="btn btn-secondary" disabled>Joined</button>
+{% else %}
+    <a href="{% url 'join-group' group.id %}" class="btn btn-primary">Join Group</a>
+{% endif %}
+                
+                <a href="{% url 'group-details' group.id %}" class="btn btn-sm btn-success">Details</a>
+                {% if group.admin == user %}
+                    <a href="#" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}
+
+
+
+
+
+
+
+{% comment %} 
+
+Use natural time (Created 2 months ego)
+
+{% endcomment %}
+    

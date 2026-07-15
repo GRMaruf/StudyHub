@@ -1,0 +1,29 @@
+<div id="note-list">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for note in notes %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ note.title }}</h5>
+                <p>{{ note.description|truncatewords:20 }}</p>
+                <a href="{{ note.file.url }}" class="btn btn-sm btn-info" download>Download</a>
+                
+                <a href="{% url 'note-detail' note.pk %}" class="btn btn-sm btn-warning">Details</a>
+                {% if note.author == user %}
+                    <a href="{% url 'note-edit' note.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'note-delete' note.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {%empty%}
+    <i>No notes yet! Why not upload the first one?</i>
+    {% endfor %}
+</div>
+</div>
+
+
+
+
+
+

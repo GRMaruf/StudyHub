@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Student Dashboard</h2>
+<a href="{% url 'note-create' %}" class="btn btn-primary">Upload New Note</a>
+<a href="{% url 'my-notes' %}" class="btn btn-primary">See Own Notes</a>
+
+<input type="search" 
+name="q"
+placeholder="Search notes..." 
+hx-get="{% url 'note-list' %}"
+hx-trigger="keyup changed delay:50ms"
+hx-target="#note-list" >
+{% comment %} hx-push-url="true" {% endcomment %}
+
+<div class="htmx-indicator">Loading...</div>
+<input hx-indicator=".htmx-indicator" ...>
+
+    <div id="note-list">
+{% include 'notes/partials/note_results.html' %}
+    </div>
+{% endblock %}
