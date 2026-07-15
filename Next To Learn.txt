@@ -1,0 +1,35 @@
+What jobs we can offer:
+ - Backend Developer
+ - Developer
+ - Software Developer (Python)
+ - Python Developer (mentions: Django)
+
+What have learned:
+ - Python
+ - Django
+ - DRF
+ - Database
+
+What must we learn next:
+ - Database Design
+ - Database Development
+ - Database Deployment (VPS, Linux)
+ - JWT
+
+What can we learn next:
+ - CI/CD
+ - O-Auth
+ - Docker (Optional)
+ - Real Time Data (Web socket, asgi)
+
+What we will do in real time:
+ - Project Documentation (Web Application Workflow)
+ - Project Approval with Client
+ - Project Figma Design, then Develop UI/UX
+ - Develop Backend API with documentation (Swagger, Redoc, Postman, Notion, etc)
+ - Database Design (ERD Diagram)
+ - Deploy Backend (Be Junior DevOps Engineer to use VPS)
+ - Connect Frontend to Backend
+
+
+Modern design, fast, 
